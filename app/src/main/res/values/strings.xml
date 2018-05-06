@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Sunset Application</string>
+    <string name="location_permission_denied">Sunset for my location is unavailable, due to missing permission.</string>
+    <string name="permission_required_toast">To show sunset for current location this permission required</string>
+    <string name="permission_rationale_location">This permission required to show sunset for current location</string>
 </resources>

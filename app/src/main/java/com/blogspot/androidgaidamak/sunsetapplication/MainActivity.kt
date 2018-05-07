@@ -9,6 +9,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -30,16 +31,21 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
+
+    private val ACTIVE_LOCATION_KEY = "active_location"
+    private val TITLE_KEY = "title"
+    private val FIRST_REQUEST_KEY = "first_request"
     private val LOCATION_PERMISSION_REQUEST_CODE: Int = 1
     private val PLACE_PICKER_REQUEST = 1
     private lateinit var DISPLAY_TIME_FORMAT: DateFormat
 
-    private var builder = PlacePicker.IntentBuilder()
+    private val api: SunsetRestApi
+    private val builder = PlacePicker.IntentBuilder()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
     private var myLocation: Location? = null
     private var activeLocation: Location? = null
-
-    private val api: SunsetRestApi
+    private var firstRequest = true
 
     init {
         val client = OkHttpClient().newBuilder()
@@ -71,10 +77,20 @@ class MainActivity : AppCompatActivity() {
                 refreshSunriseSunset()
             }
         }
+        if (savedInstanceState != null) {
+            firstRequest = savedInstanceState.getBoolean(FIRST_REQUEST_KEY, true)
+            val titleString = savedInstanceState.getString(TITLE_KEY)
+            if (!TextUtils.isEmpty(titleString)) {
+                title = titleString
+            }
+            activeLocation = savedInstanceState.getParcelable(ACTIVE_LOCATION_KEY)
+        }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         initMyLocation()
 
         DISPLAY_TIME_FORMAT = android.text.format.DateFormat.getTimeFormat(getApplicationContext())
+
+        refreshSunriseSunset()
     }
 
     private fun initMyLocation() {
@@ -87,10 +103,19 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show()
                         // Got last known location. In some rare situations this can be null.
                     }
-        } else {
+        } else if (firstRequest) {
+            firstRequest = false;
             PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
                     Manifest.permission.ACCESS_COARSE_LOCATION, true);
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putParcelable(ACTIVE_LOCATION_KEY, activeLocation)
+        outState?.putBoolean(FIRST_REQUEST_KEY, firstRequest)
+        // For some reason this data isn't restored automatically
+        outState?.putString(TITLE_KEY, title.toString())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -12,16 +12,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 public class PermissionUtils {
+
+    public static final String DIALOG_TAG = "dialog";
+
     /**
-     * Requests the fine location permission. If a rationale with an additional explanation should
+     * Requests the coarse location permission. If a rationale with an additional explanation should
      * be shown to the user, displays a dialog that triggers the request.
      */
     public static void requestPermission(AppCompatActivity activity, int requestId,
                                          String permission, boolean finishActivity) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
             // Display a dialog with rationale.
-            PermissionUtils.RationaleDialog.newInstance(requestId, finishActivity)
-                    .show(activity.getSupportFragmentManager(), "dialog");
+            boolean noDialog = activity.getSupportFragmentManager().findFragmentByTag(DIALOG_TAG) == null;
+            if (noDialog) {
+                PermissionUtils.RationaleDialog.newInstance(requestId, finishActivity)
+                        .show(activity.getSupportFragmentManager(), DIALOG_TAG);
+            }
         } else {
             // Location permission has not been granted yet, request it.
             ActivityCompat.requestPermissions(activity, new String[]{permission}, requestId);
@@ -138,7 +144,7 @@ public class PermissionUtils {
                         public void onClick(DialogInterface dialog, int which) {
                             // After click on Ok, request the permission.
                             ActivityCompat.requestPermissions(getActivity(),
-                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                                     requestCode);
                             // Do not finish the Activity while requesting permission.
                             mFinishActivity = false;

@@ -6,16 +6,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import com.google.android.gms.location.places.ui.PlacePicker
-import kotlinx.android.synthetic.main.activity_main.*
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import android.util.Log
+import com.google.android.gms.location.places.ui.PlacePicker
 import com.squareup.moshi.Moshi
+import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
@@ -64,9 +64,9 @@ class MainActivity : AppCompatActivity() {
         }
         myLocationButton.setOnClickListener {
             if (myLocation == null) {
-                Toast.makeText(this, "Location isn't available", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.location_isnt_available, Toast.LENGTH_LONG).show()
             } else {
-                title = "My location"
+                title = getString(R.string.my_loaction_title)
                 activeLocation = myLocation
                 refreshSunriseSunset()
             }
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             fusedLocationClient.lastLocation
                     .addOnSuccessListener { location: Location? ->
                         myLocation = location
-                        val toastMsg = String.format("Location: %s", location.toString())
+                        val toastMsg = getString(R.string.location_pattern, location.toString())
                         Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show()
                         // Got last known location. In some rare situations this can be null.
                     }
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PLACE_PICKER_REQUEST && resultCode == Activity.RESULT_OK) {
             val place = PlacePicker.getPlace(this, data)
-            val toastMsg = String.format("Place: %s", place.name)
+            val toastMsg = getString(R.string.place_title_pattern, place.name)
             Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show()
             title = toastMsg
 

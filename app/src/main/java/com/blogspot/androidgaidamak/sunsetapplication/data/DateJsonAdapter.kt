@@ -1,4 +1,4 @@
-package com.blogspot.androidgaidamak.sunsetapplication
+package com.blogspot.androidgaidamak.sunsetapplication.data
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader

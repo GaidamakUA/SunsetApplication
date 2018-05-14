@@ -7,4 +7,5 @@
     <string name="my_loaction_title">My location</string>
     <string name="location_isnt_available">Location isn\'t available</string>
     <string name="place_title_pattern">Place: %s</string>
+    <string name="location_isnt_picked_title">Location isn\'t picked</string>
 </resources>

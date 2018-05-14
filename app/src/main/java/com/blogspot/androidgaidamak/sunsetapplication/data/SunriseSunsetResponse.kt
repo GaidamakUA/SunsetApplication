@@ -1,4 +1,4 @@
-package com.blogspot.androidgaidamak.sunsetapplication
+package com.blogspot.androidgaidamak.sunsetapplication.data
 
 import java.util.*
 

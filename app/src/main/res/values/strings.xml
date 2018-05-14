@@ -8,4 +8,6 @@
     <string name="location_isnt_available">Location isn\'t available</string>
     <string name="place_title_pattern">Place: %s</string>
     <string name="location_isnt_picked_title">Location isn\'t picked</string>
+    <string name="my_location_button_text">My location</string>
+    <string name="pick_location_button_text">Pick location</string>
 </resources>

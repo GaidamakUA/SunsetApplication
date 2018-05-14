@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
     private val LOCATION_PERMISSION_REQUEST_CODE: Int = 1
     private val PLACE_PICKER_REQUEST = 1
     private lateinit var DISPLAY_TIME_FORMAT: DateFormat
-
-    private val builder = PlacePicker.IntentBuilder()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private var myLocation: Location? = null
@@ -41,8 +39,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        DISPLAY_TIME_FORMAT = android.text.format.DateFormat.getTimeFormat(getApplicationContext())
+
         pickLocationButton.setOnClickListener {
-            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+            val intent = PlacePicker.IntentBuilder().build(this)
+            startActivityForResult(intent, PLACE_PICKER_REQUEST);
         }
         myLocationButton.setOnClickListener {
             if (myLocation == null) {
@@ -59,8 +60,6 @@ class MainActivity : AppCompatActivity() {
         }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         initMyLocation()
-
-        DISPLAY_TIME_FORMAT = android.text.format.DateFormat.getTimeFormat(getApplicationContext())
 
         refreshSunriseSunset()
     }
@@ -99,8 +98,9 @@ class MainActivity : AppCompatActivity() {
             activeLocation?.latitude = place.latLng.latitude
             activeLocation?.longitude = place.latLng.longitude
             refreshSunriseSunset()
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,

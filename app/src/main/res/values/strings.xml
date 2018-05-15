@@ -10,4 +10,5 @@
     <string name="location_isnt_picked_title">Location isn\'t picked</string>
     <string name="my_location_button_text">My location</string>
     <string name="pick_location_button_text">Pick location</string>
+    <string name="loading_failed">Loading failed</string>
 </resources>

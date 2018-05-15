@@ -16,6 +16,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:freezesText="true"
         android:text="@string/location_isnt_picked_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +24,6 @@
 
     <ImageView
         android:id="@+id/sunriseIcon"
-        android:src="@drawable/weather_sunset_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -31,6 +31,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:src="@drawable/weather_sunset_up"
+        android:tint="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/sunriseTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -47,12 +49,13 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        tools:text="5:00"
+        android:freezesText="true"
         app:layout_constraintBottom_toTopOf="@+id/sunsetIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sunriseIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/sunriseIcon"
+        tools:text="5:00" />
 
     <ImageView
         android:id="@+id/sunsetIcon"
@@ -60,10 +63,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:src="@drawable/weather_sunset_down"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
+        android:src="@drawable/weather_sunset_down"
+        android:tint="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/sunsetTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -80,12 +84,13 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        tools:text="17:00"
+        android:freezesText="true"
         app:layout_constraintBottom_toTopOf="@+id/pickLocationButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sunsetIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/sunsetIcon"
+        tools:text="17:00" />
 
     <Button
         android:id="@+id/pickLocationButton"
